@@ -274,24 +274,29 @@ doc.text(new Date(f.fecha).toLocaleDateString(), rightColX, 52);
   // ================= CLIENTE / EMISOR =================
   doc.setTextColor(17, 24, 39);
   doc.setFontSize(11);
-  doc.setFont("helvetica", "normal");
-
-doc.text("FACTURAR A", 15, startY);
+  doc.text("FACTURAR A", 15, startY);
 doc.text("EMITIDA POR", 110, startY);
+doc.setFont("helvetica", "normal");
 
+// CLIENTE
 doc.text(cliente?.nombre || "", 15, startY + 8);
-doc.text(cliente?.email || "", 15, startY + 15);
+doc.text(`NIF: ${cliente?.nif || ""}`, 15, startY + 15);
+doc.text(cliente?.direccion || "", 15, startY + 22);
+doc.text(cliente?.email || "", 15, startY + 29);
+doc.text(cliente?.telefono || "", 15, startY + 36);
 
+// EMISOR
 doc.text(emisor?.nombre || "", 110, startY + 8);
-doc.text(emisor?.email || "", 110, startY + 15);
-
-
+doc.text(`NIF: ${emisor?.nif || ""}`, 110, startY + 15);
+doc.text(emisor?.direccion || "", 110, startY + 22);
+doc.text(emisor?.email || "", 110, startY + 29);
+doc.text(emisor?.telefono || "", 110, startY + 36);
   // línea separadora
   doc.setDrawColor(230);
   doc.line(15, 100, pageW - 15, 100);
 
   // ================= TABLA =================
-let y = startY + 35;
+let y = startY + 55;
 
   doc.setFont("helvetica", "bold");
   doc.text("Descripción", 15, y);
