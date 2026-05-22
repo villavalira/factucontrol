@@ -293,7 +293,7 @@ doc.text(emisor?.email || "", 110, startY + 29);
 doc.text(emisor?.telefono || "", 110, startY + 36);
   // línea separadora
   doc.setDrawColor(230);
-  doc.line(15, 100, pageW - 15, 100);
+  doc.line(15, 100, pageW - 15, startY +3);
 
   // ================= TABLA =================
 let y = startY + 55;
