@@ -248,10 +248,7 @@ const cliente = clientes.find(c => c.id === f.clienteId);
 
 const pageW = doc.internal.pageSize.getWidth();
 const rightColX = pageW - 30;
-// 🔥 SIEMPRE PRIMERO
-const startY = 85;
-
-// luego ya puedes usarlo
+const startY = 92;
 const logoWidth = 85;
 const logoHeight = (1181 / 1772) * logoWidth;
 const logoX = 10;
@@ -276,26 +273,24 @@ doc.text(new Date(f.fecha).toLocaleDateString(), rightColX, 52);
   // ================= CLIENTE / EMISOR =================
   doc.setTextColor(17, 24, 39);
   doc.setFontSize(11);
-  doc.setFont("helvetica", "bold");
+  doc.setFont("helvetica", "normal");
 
 doc.text("FACTURAR A", 15, startY);
 doc.text("EMITIDA POR", 110, startY);
 
-doc.text(cliente?.nombre || "", 15, startY + 12);
-doc.text(cliente?.email || "", 15, startY + 22);
+doc.text(cliente?.nombre || "", 15, startY + 8);
+doc.text(cliente?.email || "", 15, startY + 15);
 
-doc.text(emisor?.nombre || "", 110, startY + 12);
-doc.text(emisor?.email || "", 110, startY + 22);
+doc.text(emisor?.nombre || "", 110, startY + 8);
+doc.text(emisor?.email || "", 110, startY + 15);
 
-doc.text(emisor?.nombre || "", 110, startY + 10);
-doc.text(emisor?.email || "", 110, startY + 18);
 
   // línea separadora
   doc.setDrawColor(230);
   doc.line(15, 100, pageW - 15, 100);
 
   // ================= TABLA =================
-let y = 145;
+let y = startY + 35;
 
   doc.setFont("helvetica", "bold");
   doc.text("Descripción", 15, y);
