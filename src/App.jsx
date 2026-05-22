@@ -247,6 +247,7 @@ const emisor = emisores.find(e => e.id === f.emisorId);
 const cliente = clientes.find(c => c.id === f.clienteId);
 
 const pageW = doc.internal.pageSize.getWidth();
+const headerHeight = 65;
 const rightColX = pageW - 30;
 const startY = 92;
 const logoWidth = 85;
