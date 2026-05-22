@@ -273,7 +273,7 @@ doc.text(new Date(f.fecha).toLocaleDateString(), rightColX, 52);
 
   // ================= CLIENTE / EMISOR =================
   doc.setTextColor(17, 24, 39);
-  doc.setFontSize(11);
+  doc.setFontSize(9);
   doc.text("FACTURAR A", 15, startY);
 doc.text("EMITIDA POR", 110, startY);
 doc.setFont("helvetica", "normal");
