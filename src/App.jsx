@@ -249,8 +249,8 @@ const cliente = clientes.find(c => c.id === f.clienteId);
 const pageW = doc.internal.pageSize.getWidth();
 const rightColX = pageW - 30;
 // 🔥 SIEMPRE PRIMERO
-const headerHeight = 70;
-const startY = headerHeight + 15;
+const headerHeight = 50;
+const startY = 85;
 
 // luego ya puedes usarlo
 const logoWidth = 85;
