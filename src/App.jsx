@@ -276,6 +276,9 @@ doc.text(new Date(f.fecha).toLocaleDateString(), rightColX, 52);
   doc.setFontSize(9);
   doc.text("FACTURAR A", 15, startY);
 doc.text("EMITIDA POR", 110, startY);
+    // línea separadora
+  doc.setDrawColor(230);
+  doc.line(15, 100, pageW - 15, startY +3);
 doc.setFont("helvetica", "normal");
 
 // CLIENTE
@@ -291,9 +294,7 @@ doc.text(`NIF: ${emisor?.nif || ""}`, 110, startY + 15);
 doc.text(emisor?.direccion || "", 110, startY + 22);
 doc.text(emisor?.email || "", 110, startY + 29);
 doc.text(emisor?.telefono || "", 110, startY + 36);
-  // línea separadora
-  doc.setDrawColor(230);
-  doc.line(15, 100, pageW - 15, startY +3);
+
 
   // ================= TABLA =================
 let y = startY + 55;
