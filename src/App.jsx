@@ -304,7 +304,7 @@ let y = startY + 55;
   doc.text("IVA", 150, y, { align: "right" });
   doc.text("Total", 190, y, { align: "right" });
 
-  doc.line(15, y + 3, pageW - 15, y + 3);
+  doc.line(15, y + 3, pageW - 15, startY + 5);
 
   y += 15;
 
