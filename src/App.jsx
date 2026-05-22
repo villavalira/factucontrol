@@ -278,7 +278,7 @@ doc.text(new Date(f.fecha).toLocaleDateString(), rightColX, 52);
 doc.text("EMITIDA POR", 110, startY);
     // línea separadora
   doc.setDrawColor(230);
-  doc.line(15, 100, pageW - 15, startY +3);
+  doc.line(15, startY + 3, pageW - 15, startY + 3);
 doc.setFont("helvetica", "normal");
 
 // CLIENTE
@@ -297,15 +297,14 @@ doc.text(emisor?.telefono || "", 110, startY + 36);
 
 
   // ================= TABLA =================
-let y = startY + 55;
+let y = startY + 45;
 
   doc.setFont("helvetica", "bold");
   doc.text("Descripción", 15, y);
   doc.text("Base", 120, y, { align: "right" });
   doc.text("IVA", 150, y, { align: "right" });
   doc.text("Total", 190, y, { align: "right" });
-
-  doc.line(15, y + 3, pageW - 15, startY + 5);
+doc.line(15, lineY, pageW - 15, lineY);
 
   y += 15;
 
@@ -477,7 +476,10 @@ let y = startY + 55;
 
             <button style={styles.button} onClick={crearFactura}>Crear factura</button>
 
-            {facturas.map(f=> (
+            {facturas
+               .slice()
+               .sort((a, b) => a.numero - b.numero)
+               .map(f=> (
               <div key={f.id} style={{ marginTop: 10 }}>
                 <p>{f.concepto} - {f.total} €</p>
                 <button style={styles.button} onClick={() => generarPDF(f)}>PDF</button>
