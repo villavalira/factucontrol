@@ -247,10 +247,10 @@ const emisor = emisores.find(e => e.id === f.emisorId);
 const cliente = clientes.find(c => c.id === f.clienteId);
 
 const pageW = doc.internal.pageSize.getWidth();
-const rightColX = pageW - 15;
+const rightColX = pageW - 30;
 // 🔥 SIEMPRE PRIMERO
-const headerHeight = 65;
-const startY = headerHeight + 35;
+const headerHeight = 70;
+const startY = headerHeight + 15;
 
 // luego ya puedes usarlo
 const logoWidth = 85;
@@ -282,8 +282,11 @@ doc.text(new Date(f.fecha).toLocaleDateString(), rightColX, 52);
 doc.text("FACTURAR A", 15, startY);
 doc.text("EMITIDA POR", 110, startY);
 
-doc.text(cliente?.nombre || "", 15, startY + 10);
-doc.text(cliente?.email || "", 15, startY + 18);
+doc.text(cliente?.nombre || "", 15, startY + 12);
+doc.text(cliente?.email || "", 15, startY + 22);
+
+doc.text(emisor?.nombre || "", 110, startY + 12);
+doc.text(emisor?.email || "", 110, startY + 22);
 
 doc.text(emisor?.nombre || "", 110, startY + 10);
 doc.text(emisor?.email || "", 110, startY + 18);
@@ -293,7 +296,7 @@ doc.text(emisor?.email || "", 110, startY + 18);
   doc.line(15, 100, pageW - 15, 100);
 
   // ================= TABLA =================
-  let y = 120;
+let y = 145;
 
   doc.setFont("helvetica", "bold");
   doc.text("Descripción", 15, y);
