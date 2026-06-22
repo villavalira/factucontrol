@@ -77,7 +77,7 @@ const [toast, setToast] = useState(null);
 };
   const [emisorSel, setEmisorSel] = useState(null);
   const [clienteSel, setClienteSel] = useState(null);
-
+  const [userData, setUserData] = useState(null);
   const ADMIN_EMAIL = "andrea.garcia192@gmail.com";
   const isAdmin = user?.email === ADMIN_EMAIL;
   const [allFacturas, setAllFacturas] = useState([]);
@@ -132,10 +132,23 @@ const [toast, setToast] = useState(null);
 
   /* ================= AUTH ================= */
   useEffect(() => {
-  const unsub = onAuthStateChanged(auth, (u) => {
+  const unsub = onAuthStateChanged(auth, async (u) => {
     setUser(u);
-    if (u?.uid) loadAll(u.uid);
+
+    if (u?.uid) {
+      loadAll(u.uid);
+
+      // 👇 traer perfil del usuario (logo incluido)
+      const snap = await getDocs(
+        query(collection(db, "users"), where("uid", "==", u.uid))
+      );
+
+      if (!snap.empty) {
+        setUserData(snap.docs[0].data());
+      }
+    }
   });
+
   return () => unsub();
 }, []);
 
@@ -239,7 +252,8 @@ const generarPDF = async (f) => {
       };
     });
   };
- const logo = await getBase64Image("/logo.jpg");
+ const logoUrl = userData?.logoUrl || "/logo.jpg";
+const logo = await getBase64Image(logoUrl);
 
   const doc = new jsPDF();
 
