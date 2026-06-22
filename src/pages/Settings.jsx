@@ -2,44 +2,62 @@ import { useState } from "react";
 import { auth, db } from "../firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-
 export default function Settings() {
   const [file, setFile] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   const uploadLogo = async () => {
-    if (!file) return;
+    const user = auth.currentUser;
 
-    const storage = getStorage();
+    if (!user) {
+      alert("No hay usuario autenticado");
+      return;
+    }
+    if (!file) {
+      alert("Selecciona un archivo primero");
+      return;
+    }
+    setLoading(true);
+    try {
+      const storage = getStorage();
 
-    // 1. Crear referencia única por usuario
-    const logoRef = ref(storage, `logos/${auth.currentUser.uid}`);
+      // nombre único para evitar cache y sobrescritura
+      const fileName = `${Date.now()}-${file.name}`;
+      const logoRef = ref(storage, `logos/${user.uid}/${fileName}`);
 
-    // 2. Subir imagen
-    await uploadBytes(logoRef, file);
+      // subir archivo
+      await uploadBytes(logoRef, file);
 
-    // 3. Obtener URL pública
-    const url = await getDownloadURL(logoRef);
+      // obtener URL pública
+      const url = await getDownloadURL(logoRef);
 
-    // 4. Guardar en Firestore (perfil usuario)
-  await setDoc(doc(db, "users", user.uid), {
-  uid: user.uid,
-  logoUrl: url
-}, { merge: true });
-    alert("Logo guardado correctamente 👍");
+      // guardar en Firestore
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          logoUrl: url,
+          updatedAt: Date.now(),
+        },
+        { merge: true }
+      );
+      alert("Logo subido correctamente 👍");
+      setFile(null);
+    } catch (error) {
+      console.error("Error subiendo logo:", error);
+      alert("Error al subir el logo");
+    }
+    setLoading(false);
   };
-
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <h1>Configuración</h1>
-
       <input
         type="file"
         accept="image/*"
         onChange={(e) => setFile(e.target.files[0])}
       />
-
-      <button onClick={uploadLogo}>
-        Subir logo
+      <br /><br />
+      <button onClick={uploadLogo} disabled={loading}>
+        {loading ? "Subiendo..." : "Subir logo"}
       </button>
     </div>
   );
