@@ -21,14 +21,10 @@ export default function Settings() {
     const url = await getDownloadURL(logoRef);
 
     // 4. Guardar en Firestore (perfil usuario)
-    await setDoc(
-      doc(db, "users", auth.currentUser.uid),
-      {
-        logoUrl: url,
-      },
-      { merge: true }
-    );
-
+  await setDoc(doc(db, "users", user.uid), {
+  uid: user.uid,
+  logoUrl: url
+}, { merge: true });
     alert("Logo guardado correctamente 👍");
   };
 
